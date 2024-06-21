@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrar Bodegas</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Administrar Bodegas</h2>
+        
+        <!-- Acordeón para el formulario de crear una nueva bodega -->
+        <button class="acordeon" onclick="toggleForm()">Crear Nueva Bodega</button>
+        <div class="panel" id="formulario" style="display: none;">
+            <div class="form-container">
+                <div class="input-row">
+                    <div class="input-group">
+                        <input type="hidden" id="id_bodega" name="id_bodega" value="">
+                        <label for="codigo">Código de Bodega:</label>
+                        <input type="text" id="codigo" name="codigo" maxlength="5" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="nombre">Nombre de la Bodega:</label>
+                        <input type="text" id="nombre" name="nombre" maxlength="100" required>
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="direccion">Dirección de la Bodega:</label>
+                        <input type="text" id="direccion" name="direccion" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="dotacion">Dotación (cantidad de personas que trabajan):</label>
+                        <input type="number" id="dotacion" name="dotacion" min="1" required>
+                    </div>
+                </div>
+                <div class="input-row">
+                    <label for="estado-bodega">Estado de la Bodega:</label>
+                    <input type="checkbox" id="estado-bodega" name="estado_bodega" disabled checked>
+                </div>
+                <div id="encargados-container">
+                    
+                </div>
+                <div class="input-row">
+                    <button class="add-encargado-button" onclick="agregarSelectEncargado()">+ Agregar otro encargado</button>
+                </div>
+                <div class="input-row">
+                    <button class="submit-button" onclick="validarFormulario()" id="crear-bodega-btn">Crear Bodega</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Listado de bodegas existentes -->
+        <h3>Listado de Bodegas</h3>
+        <table class="bodegas-table">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Dirección</th>
+                    <th>Dotación</th>
+                    <th>Encargado</th>
+                    <th>Fecha Creación</th>
+                    <th>Estado</th>
+                    <th>Acciones</th> <!-- Columna para acciones -->
+                </tr>
+            </thead>
+            <tbody id="tablaBodegas">
+                <!-- Filas de bodegas (debe cargarse dinámicamente con JavaScript o PHP) -->
+                
+                <!-- Fin de filas de ejemplo -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function toggleForm() {
+            var panel = document.getElementById('formulario');
+            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Función para agregar un nuevo select de encargado
+        function agregarSelectEncargado() {
+            var container = document.getElementById('encargados-container');
+            var newSelect = document.createElement('div');
+            newSelect.classList.add('input-row');
+            newSelect.innerHTML = `
+                <div class="input-group">
+                    <label for="id_encargado">Encargado de la Bodega:</label>
+                    <select class="encargado-select" name="id_encargado" id="select-encargados-${container.children.length + 1}" required>
+                        <option value="">Seleccione un encargado</option>
+                        <!-- Opciones de encargados (debe cargarse dinámicamente con JavaScript o PHP) -->
+                    </select>
+                </div>
+            `;
+            container.appendChild(newSelect);
+
+            // Llamar a cargarSelect para cargar dinámicamente las opciones del select
+            cargarSelect(newSelect.querySelector('select.encargado-select'));
+        }
+
+        
+    </script>
+    <script src="js/controlador.js"></script>
+</body>
+</html>
